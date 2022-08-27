@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import { useDispatch, useSelector } from 'react-redux'
-import { decrement, increment } from '../lib/store/reducers/counterReducer'
-import type { RootState } from '../lib/store'
+import { decrement, increment } from '../features/counterSlice'
+import type { RootState } from '../app/store'
 import { Box } from '@chakra-ui/react'
 
 const Home: NextPage = () => {
