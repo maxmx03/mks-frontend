@@ -1,46 +1,13 @@
 import type { NextPage } from 'next'
-import Image from 'next/image'
-import { Grid, GridItem, Text } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
-import { Footer, Layout, TopBar } from '../components'
-
-type Products = {
-  id: number
-  name: string
-  brand: string
-  description: string
-  price: string
-  photo: string
-  updatedAt: string
-}
+import { Grid, GridItem } from '@chakra-ui/react'
+import { Footer, Layout, Products, TopBar } from '../components'
+import useProduct from '../hooks/useProduct'
 
 const Home: NextPage = () => {
-  const [products, setProducts] = useState<Products[]>([])
+  const { data, isLoading, isError } = useProduct()
 
-  useEffect(() => {
-    const url =
-      'https://mks-frontend-challenge-api.herokuapp.com/api/v1/products?page=1&rows=8&sortBy=name&orderBy=ASC'
-    const abortController = new AbortController()
-    const options = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      signal: abortController.signal,
-    }
-
-    async function getProducts(url: string, options: object) {
-      const response = await fetch(url, options)
-      const obj = await response.json()
-
-      setProducts(obj.products)
-    }
-
-    getProducts(url, options)
-
-    return () => {
-      abortController.abort()
-    }
-  }, [])
+  if (isError) return <div>failed to load</div>
+  if (isLoading) return <div>loading...</div>
 
   return (
     <Layout title="MKS Sistemas">
@@ -50,64 +17,16 @@ const Home: NextPage = () => {
         "main main"
         "footer footer"
       `}
-        gridTemplateColumns="auto"
         gridTemplateRows="6.5rem auto 3.5rem"
-        h="full"
-        w="full"
-        bg="white.100"
+        minH="full"
+        minW="full"
+        bg="white.200"
       >
         <GridItem as="header" area="topbar" bg="blue" p="5">
           <TopBar />
         </GridItem>
         <GridItem as="main" area="main">
-          <Grid
-            templateColumns="repeat(6, 300px)"
-            gap="22"
-            justifyContent="center"
-            alignItems="center"
-            w="full"
-            h="full"
-          >
-            {products &&
-              products.map((product) => (
-                <GridItem
-                  display="grid"
-                  justifyItems="center"
-                  alignItems="center"
-                  key={product.id}
-                  w="218"
-                  h="285"
-                  bg="white"
-                >
-                  <Grid
-                    templateAreas={`
-                    "img img"
-                    "desc desc"
-                    "btn btn"
-                    `}
-                    justifyItems="center"
-                    gridTemplateRows="100px 26px 32px"
-                    gap="5"
-                  >
-                    <GridItem area="img" justifyItems="center">
-                      <Image
-                        src={product.photo}
-                        alt={product.name}
-                        priority
-                        height="111"
-                        width="136"
-                      />
-                    </GridItem>
-                    <GridItem area="desc">
-                      <p>Description</p>
-                    </GridItem>
-                    <GridItem area="btn">
-                      <button>Button</button>
-                    </GridItem>
-                  </Grid>
-                </GridItem>
-              ))}
-          </Grid>
+          <Products data={data} />
         </GridItem>
         <GridItem as="footer" area="footer" bg="white.100">
           <Footer />
