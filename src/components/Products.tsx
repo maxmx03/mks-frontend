@@ -1,4 +1,5 @@
 import { Grid } from '@chakra-ui/react'
+import useProduct from '../hooks/useProduct'
 import Product from './Product'
 
 interface Product {
@@ -11,28 +12,31 @@ interface Product {
   updatedAt: string
 }
 
-interface ProductsProps {
-  data: Product[]
-}
+const Products  = () => {
+  const { data, isLoading, isError } = useProduct()
 
-const Products: React.FC<ProductsProps> = ({ data }) => (
-  <Grid
-    templateColumns={{
-      base: 'repeat(2, 218px)',
-      md: 'repeat(4, 218px)',
-    }}
-    templateRows="repeat(2, 285px)"
-    justifyContent="center"
-    alignContent="center"
-    gap="22"
-    w="full"
-    h="full"
-  >
-    {data &&
-      data.map((product: Product, index: number) => (
-        <Product {...product} key={index} />
-      ))}
-  </Grid>
-)
+  if (isError) return <div>failed to load</div>
+  if (isLoading) return <div>loading...</div>
+
+  return (
+    <Grid
+      templateColumns={{
+        base: 'repeat(2, 218px)',
+        md: 'repeat(4, 218px)',
+      }}
+      templateRows="repeat(2, 285px)"
+      justifyContent="center"
+      alignContent="center"
+      gap="22"
+      w="full"
+      h="full"
+    >
+      {data &&
+        data.map((product: Product, index: number) => (
+          <Product {...product} key={index} />
+        ))}
+    </Grid>
+  )
+}
 
 export default Products

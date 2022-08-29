@@ -1,14 +1,14 @@
-import type { NextPage } from 'next'
 import { Grid, GridItem } from '@chakra-ui/react'
 import { Checkout, Footer, Layout, Products, TopBar } from '../components'
-import useProduct from '../hooks/useProduct'
+import { SWRConfig } from 'swr'
 
-const Home: NextPage = () => {
-  const { data, isLoading, isError } = useProduct()
+interface HomeProps {
+  fallback: {
+    [key: string]: any
+  }
+}
 
-  if (isError) return <div>failed to load</div>
-  if (isLoading) return <div>loading...</div>
-
+const Home: React.FC<HomeProps> = ({ fallback }) => {
   return (
     <Layout title="MKS Sistemas">
       <Grid
@@ -26,7 +26,9 @@ const Home: NextPage = () => {
           <TopBar />
         </GridItem>
         <GridItem as="main" area="main">
-          <Products data={data} />
+          <SWRConfig value={{ fallback }}>
+            <Products />
+          </SWRConfig>
         </GridItem>
         <GridItem as="footer" area="footer" bg="white.100">
           <Footer />
@@ -35,6 +37,27 @@ const Home: NextPage = () => {
       <Checkout />
     </Layout>
   )
+}
+
+export async function getStaticProps() {
+  const server = 'http://localhost:3000'
+  const url = '/api/product'
+  const options = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+
+  const response = await fetch(server + url, options)
+  const data = await response.json()
+
+  return {
+    props: {
+      fallback: {
+        [url]: data,
+      },
+    },
+  }
 }
 
 export default Home
