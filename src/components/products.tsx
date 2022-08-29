@@ -1,4 +1,4 @@
-import { Grid } from '@chakra-ui/react'
+import { Grid, Skeleton } from '@chakra-ui/react'
 import useProduct from '../hooks/useProduct'
 import Product from './product'
 
@@ -13,10 +13,15 @@ interface Product {
 }
 
 const Products = () => {
-  const { data, isLoading, isError } = useProduct()
+  const { data, isLoading } = useProduct()
 
-  if (isError) return <div>failed to load</div>
-  if (isLoading) return <div>loading...</div>
+  function renderProduct(product: Product, key: number) {
+    if (isLoading) {
+      return <Skeleton />
+    }
+
+    return <Product product={product} key={key} />
+  }
 
   return (
     <Grid
@@ -32,9 +37,9 @@ const Products = () => {
       h="full"
     >
       {data &&
-        data.map((product: Product, index: number) => (
-          <Product product={product} key={index} />
-        ))}
+        data.map((product: Product, index: number) =>
+          renderProduct(product, index)
+        )}
     </Grid>
   )
 }
