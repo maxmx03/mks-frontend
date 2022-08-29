@@ -1,5 +1,6 @@
 import { Grid, GridItem } from '@chakra-ui/react'
-import { Checkout, Footer, Layout, Products, TopBar } from '../components'
+import { Footer, Layout, Products, TopBar } from '../components'
+import Checkout from '../features/checkout'
 import { SWRConfig } from 'swr'
 
 interface HomeProps {

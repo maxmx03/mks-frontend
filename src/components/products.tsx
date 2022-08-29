@@ -1,6 +1,6 @@
 import { Grid } from '@chakra-ui/react'
 import useProduct from '../hooks/useProduct'
-import Product from './Product'
+import Product from './product'
 
 interface Product {
   id: number
@@ -12,7 +12,7 @@ interface Product {
   updatedAt: string
 }
 
-const Products  = () => {
+const Products = () => {
   const { data, isLoading, isError } = useProduct()
 
   if (isError) return <div>failed to load</div>
@@ -33,7 +33,7 @@ const Products  = () => {
     >
       {data &&
         data.map((product: Product, index: number) => (
-          <Product {...product} key={index} />
+          <Product product={product} key={index} />
         ))}
     </Grid>
   )

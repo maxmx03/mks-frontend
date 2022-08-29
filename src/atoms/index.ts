@@ -1,5 +1,4 @@
 import Icon from "./Icon";
-import Brand from "./Brand";
-import CartButton from "./CartButton";
+import Brand from "./brand";
 
-export { Icon, Brand, CartButton }
+export { Icon, Brand }

@@ -1,12 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit"
-import { RootState } from "../app/store"
+import { createSlice } from '@reduxjs/toolkit'
+import { RootState } from '../../app/store'
 
 interface CheckoutState {
   isOpen: boolean
 }
 
 const initialState: CheckoutState = {
- isOpen: false,
+  isOpen: false,
 }
 
 export const checkoutSlice = createSlice({
@@ -15,8 +15,8 @@ export const checkoutSlice = createSlice({
   reducers: {
     onToggle: (state: CheckoutState) => {
       state.isOpen = !state.isOpen
-    }
-  }
+    },
+  },
 })
 
 export const { onToggle } = checkoutSlice.actions

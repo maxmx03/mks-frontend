@@ -11,7 +11,7 @@ import {
   Flex,
 } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
-import { onToggle, selectIsOpen } from '../features/checkoutSlice'
+import { onToggle, selectIsOpen } from './checkoutSlice'
 
 const Checkout = () => {
   const isOpen = useSelector(selectIsOpen)

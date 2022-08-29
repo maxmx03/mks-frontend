@@ -1,8 +1,7 @@
 import Layout from './layout'
 import TopBar from './top-bar'
 import Footer from './footer'
-import Product from './Product'
-import Products from './Products'
-import Checkout from './Checkout'
+import Product from './product'
+import Products from './products'
 
-export { Layout, TopBar, Footer, Product, Products, Checkout }
+export { Layout, TopBar, Footer, Product, Products }
