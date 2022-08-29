@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { Grid, GridItem } from '@chakra-ui/react'
-import { Footer, Layout, Products, TopBar } from '../components'
+import { Checkout, Footer, Layout, Products, TopBar } from '../components'
 import useProduct from '../hooks/useProduct'
 
 const Home: NextPage = () => {
@@ -32,6 +32,7 @@ const Home: NextPage = () => {
           <Footer />
         </GridItem>
       </Grid>
+      <Checkout />
     </Layout>
   )
 }
