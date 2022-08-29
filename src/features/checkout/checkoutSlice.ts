@@ -22,5 +22,3 @@ export const checkoutSlice = createSlice({
 export const { onToggle } = checkoutSlice.actions
 
 export const selectIsOpen = (state: RootState) => state.checkout.isOpen
-
-export default checkoutSlice.reducer

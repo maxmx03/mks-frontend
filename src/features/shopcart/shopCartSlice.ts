@@ -32,5 +32,3 @@ export const shopCartSlice = createSlice({
 export const { setShopCartItem } = shopCartSlice.actions
 
 export const selectShopCartItem = (state: RootState) => state.shopcart.items
-
-export default shopCartSlice.reducer

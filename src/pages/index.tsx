@@ -1,15 +1,19 @@
 import { Grid, GridItem } from '@chakra-ui/react'
-import { Footer, Layout, Products, TopBar } from '../components'
+import { NextPage } from 'next'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { Footer, Layout, TopBar } from '../components'
 import Checkout from '../features/checkout'
-import { SWRConfig } from 'swr'
+import Products from '../features/product'
+import { fetchProduct } from '../features/product/productSlice'
 
-interface HomeProps {
-  fallback: {
-    [key: string]: any
-  }
-}
+const Home: NextPage = () => {
+  const dispatch = useDispatch()
 
-const Home: React.FC<HomeProps> = ({ fallback }) => {
+  useEffect(() => {
+    dispatch(fetchProduct())
+  }, [dispatch])
+
   return (
     <Layout title="MKS Sistemas">
       <Grid
@@ -27,9 +31,7 @@ const Home: React.FC<HomeProps> = ({ fallback }) => {
           <TopBar />
         </GridItem>
         <GridItem as="main" area="main">
-          <SWRConfig value={{ fallback }}>
-            <Products />
-          </SWRConfig>
+          <Products />
         </GridItem>
         <GridItem as="footer" area="footer" bg="white.100">
           <Footer />
@@ -38,27 +40,6 @@ const Home: React.FC<HomeProps> = ({ fallback }) => {
       <Checkout />
     </Layout>
   )
-}
-
-export async function getStaticProps() {
-  const server = 'http://localhost:3000'
-  const url = '/api/product'
-  const options = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }
-
-  const response = await fetch(server + url, options)
-  const data = await response.json()
-
-  return {
-    props: {
-      fallback: {
-        [url]: data,
-      },
-    },
-  }
 }
 
 export default Home
