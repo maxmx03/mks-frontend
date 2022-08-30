@@ -15,6 +15,7 @@ import { addCartItem } from '../shopcart/shopCartSlice'
 import { Product, selectProductsStatus } from './productSlice'
 import { useSelector } from 'react-redux'
 import { addAmount } from '../checkout/checkoutSlice'
+import { formatPrice } from '../../utils'
 
 interface ProductsProps {
   products: Product[]
@@ -75,7 +76,7 @@ const Products = ({ products }: ProductsProps) => {
                   {product.name}
                 </Text>
                 <Button color="white" bg="black.100" size="sm">
-                  R$ {Math.abs(+product.price - 1)}
+                  R$ {formatPrice(product.price)}
                 </Button>
               </GridItem>
               <GridItem as={Skeleton} isLoaded={!loading} mx="3">

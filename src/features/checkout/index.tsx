@@ -15,6 +15,7 @@ import {
   Image,
 } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
+import { formatPrice } from '../../utils'
 import { Product } from '../product/productSlice'
 import {
   addCartItem,
@@ -103,8 +104,8 @@ const Checkout = () => {
                   </Button>
                 </GridItem>
                 <GridItem as={Flex} justifyContent="center" alignItems="center">
-                  <Text fontSize="0.875rem" fontWeight="bold">
-                    R${Math.abs(+item.price - 1)}
+                  <Text fontSize="0.875rem" fontWeight="bold" color="black">
+                    R$ {formatPrice(item.price)}
                   </Text>
                 </GridItem>
               </Grid>
