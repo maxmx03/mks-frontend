@@ -70,12 +70,12 @@ export const shopCartSlice = createSlice({
     addAmount: (state: ShopCartState, action: PayloadAction<Product>) => {
       const product = action.payload
 
-      state.amount += +product.price
+      state.amount += Math.abs(+product.price - 1)
     },
     rmAmount: (state: ShopCartState, action: PayloadAction<Product>) => {
       const product = action.payload 
 
-      state.amount -= +product.price
+      state.amount -= Math.abs(+product.price - 1)
     },
     addQuantity: (state: ShopCartState) => {
       let quantity = 0
