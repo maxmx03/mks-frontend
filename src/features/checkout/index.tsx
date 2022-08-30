@@ -49,8 +49,9 @@ const Checkout = () => {
                 key={index}
                 gridTemplateColumns="auto 113px auto auto"
                 h="101"
-                mt="2"
+                mt="5"
                 bg="white"
+                rounded="xl"
               >
                 <GridItem justifySelf="center" alignSelf="center">
                   <Image

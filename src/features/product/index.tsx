@@ -1,9 +1,7 @@
-import { Grid, Skeleton } from '@chakra-ui/react'
+import { Grid } from '@chakra-ui/react'
 import { selectProducts } from './productSlice'
 import Products from './products'
-import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { selectProductsStatus } from './productSlice'
 
 interface Product {
   id: number
@@ -17,16 +15,6 @@ interface Product {
 
 const Product = () => {
   const products = useSelector(selectProducts)
-  const [isLoaded, setIsLoaded] = useState(false)
-  const status = useSelector(selectProductsStatus)
-
-  useEffect(() => {
-    if (status === 'loading' || status === 'failed') {
-      setIsLoaded(false)
-    } else {
-      setIsLoaded(true)
-    }
-  }, [status, isLoaded])
 
   return (
     <Grid
@@ -41,7 +29,7 @@ const Product = () => {
       w="full"
       h="full"
     >
-      {!isLoaded ? <Skeleton /> : <Products products={products} />}
+      <Products products={products} />
     </Grid>
   )
 }

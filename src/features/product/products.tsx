@@ -6,11 +6,14 @@ import {
   Text,
   Box,
   Button,
+  Skeleton,
 } from '@chakra-ui/react'
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Icon } from '../../atoms'
 import { setShopCartItem } from '../shopcart/shopCartSlice'
+import { selectProductsStatus } from './productSlice'
+import { useSelector } from 'react-redux'
 
 interface Product {
   id: number
@@ -28,10 +31,24 @@ interface ProductsProps {
 
 const Products = ({ products }: ProductsProps) => {
   const dispatch = useDispatch()
+  const status = useSelector(selectProductsStatus)
+  const [loading, setLoading] = useState(true)
 
   function handleClick(product: Product) {
     dispatch(setShopCartItem(product))
   }
+
+  useEffect(() => {
+    if (status === 'loading' || status === 'failed') {
+      setLoading(true)
+    } else {
+      let timer = setTimeout(() => setLoading(false), 1000)
+
+      return () => {
+        clearTimeout(timer)
+      }
+    }
+  }, [status, setLoading])
 
   return (
     <Fragment>
@@ -46,20 +63,30 @@ const Products = ({ products }: ProductsProps) => {
               boxShadow="md"
               rounded="md"
             >
-              <GridItem justifySelf="center" alignSelf="center">
+              <GridItem
+                as={Skeleton}
+                isLoaded={!loading}
+                justifySelf="center"
+                alignSelf="center"
+              >
                 <Image src={product.photo} alt={product.name} boxSize="134" />
               </GridItem>
-              <GridItem as={Flex} justifyContent="space-between" gap="5" mx="3">
-                <Fragment>
-                  <Text color="black" fontSize="1rem">
-                    {product.name}
-                  </Text>
-                  <Button color="white" bg="black.100" size="sm">
-                    R$ {Math.abs(+product.price - 1)}
-                  </Button>
-                </Fragment>
+              <GridItem
+                as={Skeleton}
+                isLoaded={!loading}
+                display="flex"
+                justifyContent="space-between"
+                gap="5"
+                mx="3"
+              >
+                <Text color="black" fontSize="1rem">
+                  {product.name}
+                </Text>
+                <Button color="white" bg="black.100" size="sm">
+                  R$ {Math.abs(+product.price - 1)}
+                </Button>
               </GridItem>
-              <GridItem mx="3">
+              <GridItem as={Skeleton} isLoaded={!loading} mx="3">
                 <Text color="black" fontSize="0.625rem">
                   {product.description}
                 </Text>
