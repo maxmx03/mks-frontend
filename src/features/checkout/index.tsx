@@ -104,7 +104,7 @@ const Checkout = () => {
                   </Button>
                 </GridItem>
                 <GridItem as={Flex} justifyContent="center" alignItems="center">
-                  <Text fontSize="0.875rem" fontWeight="bold" color="black">
+                  <Text fontSize="sm" fontWeight="bold" color="black">
                     R$ {formatPrice(item.price)}
                   </Text>
                 </GridItem>
