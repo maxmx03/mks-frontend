@@ -1,24 +1,22 @@
 import { Button, Flex } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Icon } from '../../atoms'
 import { onToggle } from '../checkout/checkoutSlice'
-import { selectShopCartItem } from './shopCartSlice'
+import {
+  selectShopCartItem,
+  selectShopCartTotal,
+  shopCartTotal,
+} from './shopCartSlice'
 
 const CartButton = () => {
   const dispatch = useDispatch()
-  const [quantity, setQuantity] = useState(0)
-  const shopCartItem = useSelector(selectShopCartItem)
+  const shopCartItems = useSelector(selectShopCartItem)
+  const total = useSelector(selectShopCartTotal)
 
   useEffect(() => {
-    setQuantity((qt) => {
-      if (shopCartItem && shopCartItem.length > 0) {
-        return shopCartItem.length
-      }
-
-      return qt
-    })
-  }, [shopCartItem])
+    dispatch(shopCartTotal())
+  }, [dispatch, shopCartItems])
 
   function onOpen() {
     dispatch(onToggle())
@@ -27,7 +25,7 @@ const CartButton = () => {
   return (
     <Flex as={Button} onClick={onOpen} gap="2" size={{ base: 'sm', md: 'md' }}>
       <Icon src="/shopcart.svg" alt="shop cart" />
-      <span>{quantity}</span>
+      <span>{total}</span>
     </Flex>
   )
 }

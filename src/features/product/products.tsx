@@ -46,14 +46,9 @@ const Products = ({ products }: ProductsProps) => {
               boxShadow="md"
               rounded="md"
             >
-              <GridItem
-                justifySelf="center"
-                alignSelf="center"
-                as={Image}
-                src={product.photo}
-                alt="photo"
-                boxSize="134"
-              />
+              <GridItem justifySelf="center" alignSelf="center">
+                <Image src={product.photo} alt={product.name} boxSize="134" />
+              </GridItem>
               <GridItem as={Flex} justifyContent="space-between" gap="5" mx="3">
                 <Fragment>
                   <Text color="black" fontSize="1rem">

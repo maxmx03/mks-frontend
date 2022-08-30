@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../../app/store'
 
-interface Product {
+export interface Product {
   id: number
   name: string
   brand: string
