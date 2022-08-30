@@ -15,20 +15,23 @@ import {
   Image,
 } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
-import Product from '../product'
+import { Product } from '../product/productSlice'
 import {
-  addAmount,
   addCartItem,
-  rmAmount,
   rmCartItem,
   selectCartItems,
-  selectShopCartAmount,
 } from '../shopcart/shopCartSlice'
-import { onToggle, selectIsOpen } from './checkoutSlice'
+import {
+  addAmount,
+  onToggle,
+  rmAmount,
+  selectIsOpen,
+  selectAmount,
+} from './checkoutSlice'
 
 const Checkout = () => {
   const shopCartItems = useSelector(selectCartItems)
-  const amount = useSelector(selectShopCartAmount)
+  const amount = useSelector(selectAmount)
   const isOpen = useSelector(selectIsOpen)
   const dispatch = useDispatch()
 

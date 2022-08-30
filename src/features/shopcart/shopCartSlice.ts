@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../../app/store'
-import Product from '../product'
+import { Product } from '../product/productSlice'
 
 interface ShopCartItem {
   id: number
@@ -67,16 +67,6 @@ export const shopCartSlice = createSlice({
         })
       }
     },
-    addAmount: (state: ShopCartState, action: PayloadAction<Product>) => {
-      const product = action.payload
-
-      state.amount += Math.abs(+product.price - 1)
-    },
-    rmAmount: (state: ShopCartState, action: PayloadAction<Product>) => {
-      const product = action.payload 
-
-      state.amount -= Math.abs(+product.price - 1)
-    },
     addQuantity: (state: ShopCartState) => {
       let quantity = 0
 
@@ -89,9 +79,8 @@ export const shopCartSlice = createSlice({
   },
 })
 
-export const { addCartItem, rmCartItem, addAmount, addQuantity, rmAmount } = shopCartSlice.actions
+export const { addCartItem, rmCartItem, addQuantity } = shopCartSlice.actions
 
 export const selectCartItems = (state: RootState) => state.shopcart.items
 export const selectShopCartQuantity = (state: RootState) =>
   state.shopcart.quantity
-export const selectShopCartAmount = (state: RootState) => state.shopcart.amount

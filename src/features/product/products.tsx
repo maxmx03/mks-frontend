@@ -11,19 +11,10 @@ import {
 import { Fragment, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Icon } from '../../atoms'
-import { addAmount, addCartItem } from '../shopcart/shopCartSlice'
-import { selectProductsStatus } from './productSlice'
+import { addCartItem } from '../shopcart/shopCartSlice'
+import { Product, selectProductsStatus } from './productSlice'
 import { useSelector } from 'react-redux'
-
-interface Product {
-  id: number
-  name: string
-  brand: string
-  description: string
-  price: string
-  photo: string
-  updatedAt: string
-}
+import { addAmount } from '../checkout/checkoutSlice'
 
 interface ProductsProps {
   products: Product[]

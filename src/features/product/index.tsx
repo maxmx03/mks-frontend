@@ -3,16 +3,6 @@ import { selectProducts } from './productSlice'
 import Products from './products'
 import { useSelector } from 'react-redux'
 
-interface Product {
-  id: number
-  name: string
-  brand: string
-  description: string
-  price: string
-  photo: string
-  updatedAt: string
-}
-
 const Product = () => {
   const products = useSelector(selectProducts)
 
