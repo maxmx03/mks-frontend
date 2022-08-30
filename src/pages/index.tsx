@@ -1,14 +1,14 @@
 import { Grid, GridItem } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useAppDispatch } from '../app/store'
 import { Footer, Layout, TopBar } from '../components'
 import Checkout from '../features/checkout'
 import Products from '../features/product'
 import { fetchProduct } from '../features/product/productSlice'
 
 const Home: NextPage = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(fetchProduct())
