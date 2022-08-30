@@ -11,7 +11,11 @@ const Home: NextPage = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(fetchProduct())
+    const promise = dispatch(fetchProduct())
+
+    return () => {
+      promise.abort()
+    }
   }, [dispatch])
 
   return (

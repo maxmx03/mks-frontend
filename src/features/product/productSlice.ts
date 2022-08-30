@@ -23,10 +23,11 @@ const initialState: ProductState = {
 
 export const fetchProduct = createAsyncThunk(
   'product/fetchProducts',
-  async () => {
+  async (_, thunkAPI) => {
     const response = await fetch(
       'https://mks-frontend-challenge-api.herokuapp.com/api/v1/products?page=1&rows=8&sortBy=name&orderBy=ASC',
       {
+        signal: thunkAPI.signal,
         headers: {
           'Content-Type': 'application/json',
         },
