@@ -27,7 +27,26 @@ export const shopCartSlice = createSlice({
   name: 'shopcart',
   initialState,
   reducers: {
-    setShopCartItem: (state: ShopCartState, action: PayloadAction<Product>) => {
+    rmCartItem: (state: ShopCartState, action: PayloadAction<Product>) => {
+      const product = action.payload
+      const shopcartItem = state.items.filter((item) => item.id === product.id)
+
+      if (shopcartItem.length > 0) {
+        state.items = state.items.map((item) => {
+          if (item.id === shopcartItem[0].id) {
+            return {
+              ...item,
+              quantity: item.quantity && item.quantity - 1,
+            }
+          }
+
+          return item
+        })
+
+        state.items = state.items.filter(item => item.quantity > 0)
+      }
+    },
+    addCartItem: (state: ShopCartState, action: PayloadAction<Product>) => {
       const product = action.payload
       const shopcartItem = state.items.filter((item) => item.id === product.id)
 
@@ -46,7 +65,7 @@ export const shopCartSlice = createSlice({
         })
       }
     },
-    shopCartTotal: (state: ShopCartState) => {
+    sumShopCartItems: (state: ShopCartState) => {
       let total = 0
 
       state.items.forEach((item) => {
@@ -58,7 +77,8 @@ export const shopCartSlice = createSlice({
   },
 })
 
-export const { setShopCartItem, shopCartTotal } = shopCartSlice.actions
+export const { addCartItem, rmCartItem, sumShopCartItems } =
+  shopCartSlice.actions
 
-export const selectShopCartItem = (state: RootState) => state.shopcart.items
+export const selectCartItems = (state: RootState) => state.shopcart.items
 export const selectShopCartTotal = (state: RootState) => state.shopcart.total

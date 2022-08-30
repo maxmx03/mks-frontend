@@ -4,18 +4,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Icon } from '../../atoms'
 import { onToggle } from '../checkout/checkoutSlice'
 import {
-  selectShopCartItem,
+  selectCartItems,
   selectShopCartTotal,
-  shopCartTotal,
+  sumShopCartItems,
 } from './shopCartSlice'
 
 const CartButton = () => {
   const dispatch = useDispatch()
-  const shopCartItems = useSelector(selectShopCartItem)
+  const shopCartItems = useSelector(selectCartItems)
   const total = useSelector(selectShopCartTotal)
 
   useEffect(() => {
-    dispatch(shopCartTotal())
+    dispatch(sumShopCartItems())
   }, [dispatch, shopCartItems])
 
   function onOpen() {

@@ -11,7 +11,7 @@ import {
 import { Fragment, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Icon } from '../../atoms'
-import { setShopCartItem } from '../shopcart/shopCartSlice'
+import { addCartItem } from '../shopcart/shopCartSlice'
 import { selectProductsStatus } from './productSlice'
 import { useSelector } from 'react-redux'
 
@@ -35,7 +35,7 @@ const Products = ({ products }: ProductsProps) => {
   const [loading, setLoading] = useState(true)
 
   function handleClick(product: Product) {
-    dispatch(setShopCartItem(product))
+    dispatch(addCartItem(product))
   }
 
   useEffect(() => {

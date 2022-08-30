@@ -15,16 +15,29 @@ import {
   Image,
 } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectShopCartItem } from '../shopcart/shopCartSlice'
+import Product from '../product'
+import {
+  addCartItem,
+  rmCartItem,
+  selectCartItems,
+} from '../shopcart/shopCartSlice'
 import { onToggle, selectIsOpen } from './checkoutSlice'
 
 const Checkout = () => {
-  const shopCartItems = useSelector(selectShopCartItem)
+  const shopCartItems = useSelector(selectCartItems)
   const isOpen = useSelector(selectIsOpen)
   const dispatch = useDispatch()
 
   function onClose() {
     dispatch(onToggle())
+  }
+
+  function handlePlusClick(product: Product) {
+    dispatch(addCartItem(product))
+  }
+
+  function handleMinusClick(product: Product) {
+    dispatch(rmCartItem(product))
   }
 
   return (
@@ -66,13 +79,24 @@ const Checkout = () => {
                     {item.name}
                   </Text>
                 </GridItem>
-                <GridItem as={Flex} justifyContent="center" alignItems="center" gap="1">
-                  <Button size="sm">-</Button>
+                <GridItem
+                  as={Flex}
+                  justifyContent="center"
+                  alignItems="center"
+                  gap="1"
+                >
+                  <Button size="sm" onClick={() => handleMinusClick(item)}>
+                    -
+                  </Button>
                   <span>{item.quantity}</span>
-                  <Button size="sm">+</Button>
+                  <Button size="sm" onClick={() => handlePlusClick(item)}>
+                    +
+                  </Button>
                 </GridItem>
                 <GridItem as={Flex} justifyContent="center" alignItems="center">
-                <Text fontSize="0.875rem" fontWeight="bold">R${Math.abs(+item.price - 1)}</Text>
+                  <Text fontSize="0.875rem" fontWeight="bold">
+                    R${Math.abs(+item.price - 1)}
+                  </Text>
                 </GridItem>
               </Grid>
             )
