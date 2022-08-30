@@ -5,17 +5,17 @@ import { Icon } from '../../atoms'
 import { onToggle } from '../checkout/checkoutSlice'
 import {
   selectCartItems,
-  selectShopCartTotal,
-  sumShopCartItems,
+  selectShopCartQuantity,
+  addQuantity,
 } from './shopCartSlice'
 
 const CartButton = () => {
   const dispatch = useDispatch()
   const shopCartItems = useSelector(selectCartItems)
-  const total = useSelector(selectShopCartTotal)
+  const quantity = useSelector(selectShopCartQuantity)
 
   useEffect(() => {
-    dispatch(sumShopCartItems())
+    dispatch(addQuantity())
   }, [dispatch, shopCartItems])
 
   function onOpen() {
@@ -25,7 +25,7 @@ const CartButton = () => {
   return (
     <Flex as={Button} onClick={onOpen} gap="2" size={{ base: 'sm', md: 'md' }}>
       <Icon src="/shopcart.svg" alt="shop cart" />
-      <span>{total}</span>
+      <span>{quantity}</span>
     </Flex>
   )
 }

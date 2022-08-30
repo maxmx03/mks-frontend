@@ -15,12 +15,14 @@ interface ShopCartItem {
 
 interface ShopCartState {
   items: ShopCartItem[]
-  total: number
+  quantity: number
+  amount: number
 }
 
 const initialState: ShopCartState = {
   items: [],
-  total: 0,
+  quantity: 0,
+  amount: 0,
 }
 
 export const shopCartSlice = createSlice({
@@ -43,7 +45,7 @@ export const shopCartSlice = createSlice({
           return item
         })
 
-        state.items = state.items.filter(item => item.quantity > 0)
+        state.items = state.items.filter((item) => item.quantity > 0)
       }
     },
     addCartItem: (state: ShopCartState, action: PayloadAction<Product>) => {
@@ -65,20 +67,31 @@ export const shopCartSlice = createSlice({
         })
       }
     },
-    sumShopCartItems: (state: ShopCartState) => {
-      let total = 0
+    addAmount: (state: ShopCartState, action: PayloadAction<Product>) => {
+      const product = action.payload
+
+      state.amount += +product.price
+    },
+    rmAmount: (state: ShopCartState, action: PayloadAction<Product>) => {
+      const product = action.payload 
+
+      state.amount -= +product.price
+    },
+    addQuantity: (state: ShopCartState) => {
+      let quantity = 0
 
       state.items.forEach((item) => {
-        total += item.quantity
+        quantity += item.quantity
       })
 
-      state.total = total
+      state.quantity = quantity
     },
   },
 })
 
-export const { addCartItem, rmCartItem, sumShopCartItems } =
-  shopCartSlice.actions
+export const { addCartItem, rmCartItem, addAmount, addQuantity, rmAmount } = shopCartSlice.actions
 
 export const selectCartItems = (state: RootState) => state.shopcart.items
-export const selectShopCartTotal = (state: RootState) => state.shopcart.total
+export const selectShopCartQuantity = (state: RootState) =>
+  state.shopcart.quantity
+export const selectShopCartAmount = (state: RootState) => state.shopcart.amount

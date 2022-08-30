@@ -17,14 +17,18 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import Product from '../product'
 import {
+  addAmount,
   addCartItem,
+  rmAmount,
   rmCartItem,
   selectCartItems,
+  selectShopCartAmount,
 } from '../shopcart/shopCartSlice'
 import { onToggle, selectIsOpen } from './checkoutSlice'
 
 const Checkout = () => {
   const shopCartItems = useSelector(selectCartItems)
+  const amount = useSelector(selectShopCartAmount)
   const isOpen = useSelector(selectIsOpen)
   const dispatch = useDispatch()
 
@@ -34,10 +38,12 @@ const Checkout = () => {
 
   function handlePlusClick(product: Product) {
     dispatch(addCartItem(product))
+    dispatch(addAmount(product))
   }
 
   function handleMinusClick(product: Product) {
     dispatch(rmCartItem(product))
+    dispatch(rmAmount(product))
   }
 
   return (
@@ -110,7 +116,7 @@ const Checkout = () => {
               </Text>
               <Spacer />
               <Text fontSize="1.75rem" fontWeight="bold" color="white">
-                R$ 798
+                R$ {amount}
               </Text>
             </Flex>
             <Button
