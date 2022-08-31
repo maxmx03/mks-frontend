@@ -82,7 +82,7 @@ export const shopCartSlice = createSlice({
 
       state.quantity = quantity
     },
-    deleteCartItem: (state: ShopCartState, action: PayloadAction<Product>) => {
+    removeCartItem: (state: ShopCartState, action: PayloadAction<Product>) => {
       const product = action.payload
       state.items = state.items.filter((item) => item.id !== product.id)
     },
@@ -93,7 +93,7 @@ export const {
   increaseCartItem,
   decreaseCartItem,
   addQuantity,
-  deleteCartItem,
+  removeCartItem,
 } = shopCartSlice.actions
 
 export const selectCartItems = (state: RootState) => state.shopcart.items

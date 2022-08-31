@@ -23,7 +23,7 @@ import {
   increaseCartItem,
   decreaseCartItem,
   selectCartItems,
-  deleteCartItem,
+  removeCartItem,
 } from '../shopcart/shopCartSlice'
 import {
   addAmount,
@@ -54,7 +54,7 @@ const Checkout = () => {
   }
 
   function handleCloseButton(product: Product) {
-    dispatch(deleteCartItem(product))
+    dispatch(removeCartItem(product))
   }
 
   return (
