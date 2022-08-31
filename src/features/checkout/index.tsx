@@ -18,12 +18,12 @@ import {
 } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { formatPrice } from '../../utils'
-import { Product } from '../product/productSlice'
 import {
   increaseCartItem,
   decreaseCartItem,
   selectCartItems,
   removeCartItem,
+  ShopCartItem,
 } from '../shopcart/shopCartSlice'
 import {
   increaseAmount,
@@ -44,17 +44,17 @@ const Checkout = () => {
     dispatch(onToggle())
   }
 
-  function handlePlusClick(product: Product) {
+  function handlePlusClick(product: ShopCartItem) {
     dispatch(increaseCartItem(product))
     dispatch(increaseAmount(product))
   }
 
-  function handleMinusClick(product: Product) {
+  function handleMinusClick(product: ShopCartItem) {
     dispatch(decreaseCartItem(product))
     dispatch(decreaseAmount(product))
   }
 
-  function handleCloseButton(product: Product, products: Product[]) {
+  function handleCloseButton(product: ShopCartItem, products: ShopCartItem[]) {
     dispatch(removeItemsAmount({ product, products }))
     dispatch(removeCartItem(product))
   }
