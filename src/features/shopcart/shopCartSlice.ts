@@ -29,7 +29,10 @@ export const shopCartSlice = createSlice({
   name: 'shopcart',
   initialState,
   reducers: {
-    rmCartItem: (state: ShopCartState, action: PayloadAction<Product>) => {
+    decreaseCartItem: (
+      state: ShopCartState,
+      action: PayloadAction<Product>
+    ) => {
       const product = action.payload
       const shopcartItem = state.items.filter((item) => item.id === product.id)
 
@@ -48,7 +51,10 @@ export const shopCartSlice = createSlice({
         state.items = state.items.filter((item) => item.quantity > 0)
       }
     },
-    addCartItem: (state: ShopCartState, action: PayloadAction<Product>) => {
+    increaseCartItem: (
+      state: ShopCartState,
+      action: PayloadAction<Product>
+    ) => {
       const product = action.payload
       const shopcartItem = state.items.filter((item) => item.id === product.id)
 
@@ -76,10 +82,19 @@ export const shopCartSlice = createSlice({
 
       state.quantity = quantity
     },
+    deleteCartItem: (state: ShopCartState, action: PayloadAction<Product>) => {
+      const product = action.payload
+      state.items = state.items.filter((item) => item.id !== product.id)
+    },
   },
 })
 
-export const { addCartItem, rmCartItem, addQuantity } = shopCartSlice.actions
+export const {
+  increaseCartItem,
+  decreaseCartItem,
+  addQuantity,
+  deleteCartItem,
+} = shopCartSlice.actions
 
 export const selectCartItems = (state: RootState) => state.shopcart.items
 export const selectShopCartQuantity = (state: RootState) =>

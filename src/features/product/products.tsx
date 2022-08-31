@@ -11,7 +11,7 @@ import {
 import { Fragment, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Icon } from '../../atoms'
-import { addCartItem } from '../shopcart/shopCartSlice'
+import { increaseCartItem } from '../shopcart/shopCartSlice'
 import { Product, selectProductsStatus } from './productSlice'
 import { useSelector } from 'react-redux'
 import { addAmount } from '../checkout/checkoutSlice'
@@ -27,7 +27,7 @@ const Products = ({ products }: ProductsProps) => {
   const [loading, setLoading] = useState(true)
 
   function handleClick(product: Product) {
-    dispatch(addCartItem(product))
+    dispatch(increaseCartItem(product))
     dispatch(addAmount(product))
   }
 
@@ -75,7 +75,12 @@ const Products = ({ products }: ProductsProps) => {
                 <Text color="black" fontSize="1rem">
                   {product.name}
                 </Text>
-                <Button color="white" bg="black.100" size="sm">
+                <Button
+                  color="white"
+                  bg="black.100"
+                  size="sm"
+                  _hover={{ bg: 'black.100' }}
+                >
                   R$ {formatPrice(product.price)}
                 </Button>
               </GridItem>

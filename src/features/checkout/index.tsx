@@ -13,14 +13,17 @@ import {
   Grid,
   GridItem,
   Image,
+  IconButton,
+  CloseButton,
 } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { formatPrice } from '../../utils'
 import { Product } from '../product/productSlice'
 import {
-  addCartItem,
-  rmCartItem,
+  increaseCartItem,
+  decreaseCartItem,
   selectCartItems,
+  deleteCartItem,
 } from '../shopcart/shopCartSlice'
 import {
   addAmount,
@@ -41,13 +44,17 @@ const Checkout = () => {
   }
 
   function handlePlusClick(product: Product) {
-    dispatch(addCartItem(product))
+    dispatch(increaseCartItem(product))
     dispatch(addAmount(product))
   }
 
   function handleMinusClick(product: Product) {
-    dispatch(rmCartItem(product))
+    dispatch(decreaseCartItem(product))
     dispatch(rmAmount(product))
+  }
+
+  function handleCloseButton(product: Product) {
+    dispatch(deleteCartItem(product))
   }
 
   return (
@@ -103,10 +110,48 @@ const Checkout = () => {
                     +
                   </Button>
                 </GridItem>
-                <GridItem as={Flex} justifyContent="center" alignItems="center">
-                  <Text fontSize="sm" fontWeight="bold" color="black">
-                    R$ {formatPrice(item.price)}
-                  </Text>
+                <GridItem
+                  as={Grid}
+                  gridTemplateAreas={`
+                  "price btn"
+                  "price btn"
+                `}
+                  gridTemplateColumns="auto 40px"
+                >
+                  <GridItem
+                    as={Flex}
+                    justifyContent="center"
+                    alignItems="center"
+                    area="price"
+                  >
+                    <Text fontSize="sm" fontWeight="bold" color="black">
+                      R$ {formatPrice(item.price)}
+                    </Text>
+                  </GridItem>
+                  <GridItem
+                    as={Flex}
+                    position="relative"
+                    justifyContent="center"
+                    area="btn"
+                  >
+                    <IconButton
+                      aria-label="remove cartitem"
+                      icon={
+                        <CloseButton
+                          bg="black"
+                          _hover={{ bg: 'black.50' }}
+                          rounded="full"
+                          color="white"
+                        />
+                      }
+                      size="sm"
+                      position="absolute"
+                      top="-3"
+                      right="-3"
+                      rounded="full"
+                      onClick={() => handleCloseButton(item)}
+                    />
+                  </GridItem>
                 </GridItem>
               </Grid>
             )
@@ -130,6 +175,7 @@ const Checkout = () => {
               color="white"
               h="97"
               w="full"
+              _hover={{ bg: 'black.50' }}
             >
               Finalizar Compra
             </Button>
