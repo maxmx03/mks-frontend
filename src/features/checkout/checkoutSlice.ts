@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../../app/store'
-import { Product } from '../product/productSlice'
+import { formatPrice } from '../../utils'
+import { ShopCartItem } from '../shopcart/shopCartSlice'
 
 interface CheckoutState {
   isOpen: boolean
@@ -19,20 +20,39 @@ export const checkoutSlice = createSlice({
     onToggle: (state: CheckoutState) => {
       state.isOpen = !state.isOpen
     },
-    addAmount: (state: CheckoutState, action: PayloadAction<Product>) => {
+    increaseAmount: (
+      state: CheckoutState,
+      action: PayloadAction<ShopCartItem>
+    ) => {
       const product = action.payload
 
-      state.amount += Math.abs(+product.price - 1)
+      state.amount += formatPrice(product.price)
     },
-    rmAmount: (state: CheckoutState, action: PayloadAction<Product>) => {
+    decreaseAmount: (
+      state: CheckoutState,
+      action: PayloadAction<ShopCartItem>
+    ) => {
       const product = action.payload
 
-      state.amount -= Math.abs(+product.price - 1)
+      state.amount -= formatPrice(product.price)
+    },
+    removeItemsAmount: (
+      state: CheckoutState,
+      action: PayloadAction<{ product: ShopCartItem; products: ShopCartItem[] }>
+    ) => {
+      const productToRemove = action.payload.product
+      const products = action.payload.products
+      const shopCartItem = products.filter(
+        (p) => p.id === productToRemove.id
+      )[0]
+      state.amount =
+        state.amount - formatPrice(shopCartItem.price) * shopCartItem.quantity
     },
   },
 })
 
-export const { onToggle, addAmount, rmAmount } = checkoutSlice.actions
+export const { onToggle, decreaseAmount, increaseAmount, removeItemsAmount } =
+  checkoutSlice.actions
 
 export const selectIsOpen = (state: RootState) => state.checkout.isOpen
 export const selectAmount = (state: RootState) => state.checkout.amount

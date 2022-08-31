@@ -26,11 +26,12 @@ import {
   removeCartItem,
 } from '../shopcart/shopCartSlice'
 import {
-  addAmount,
+  increaseAmount,
   onToggle,
-  rmAmount,
+  decreaseAmount,
   selectIsOpen,
   selectAmount,
+  removeItemsAmount,
 } from './checkoutSlice'
 
 const Checkout = () => {
@@ -45,15 +46,16 @@ const Checkout = () => {
 
   function handlePlusClick(product: Product) {
     dispatch(increaseCartItem(product))
-    dispatch(addAmount(product))
+    dispatch(increaseAmount(product))
   }
 
   function handleMinusClick(product: Product) {
     dispatch(decreaseCartItem(product))
-    dispatch(rmAmount(product))
+    dispatch(decreaseAmount(product))
   }
 
-  function handleCloseButton(product: Product) {
+  function handleCloseButton(product: Product, products: Product[]) {
+    dispatch(removeItemsAmount({ product, products }))
     dispatch(removeCartItem(product))
   }
 
@@ -149,7 +151,7 @@ const Checkout = () => {
                       top="-3"
                       right="-3"
                       rounded="full"
-                      onClick={() => handleCloseButton(item)}
+                      onClick={() => handleCloseButton(item, shopCartItems)}
                     />
                   </GridItem>
                 </GridItem>

@@ -14,7 +14,7 @@ import { Icon } from '../../atoms'
 import { increaseCartItem } from '../shopcart/shopCartSlice'
 import { Product, selectProductsStatus } from './productSlice'
 import { useSelector } from 'react-redux'
-import { addAmount } from '../checkout/checkoutSlice'
+import { increaseAmount } from '../checkout/checkoutSlice'
 import { formatPrice } from '../../utils'
 
 interface ProductsProps {
@@ -28,7 +28,7 @@ const Products = ({ products }: ProductsProps) => {
 
   function handleClick(product: Product) {
     dispatch(increaseCartItem(product))
-    dispatch(addAmount(product))
+    dispatch(increaseAmount(product))
   }
 
   useEffect(() => {
