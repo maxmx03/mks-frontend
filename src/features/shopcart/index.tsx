@@ -2,12 +2,12 @@ import { Button, Flex } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Icon } from '../../atoms'
-import { onToggle } from '../checkout/checkoutSlice'
+import { onToggle } from '../checkout/checkoutslice'
 import {
   selectCartItems,
   selectShopCartQuantity,
   addQuantity,
-} from './shopCartSlice'
+} from './shopcartslice'
 
 const CartButton = () => {
   const dispatch = useDispatch()

@@ -11,10 +11,10 @@ import {
 import { Fragment, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Icon } from '../../atoms'
-import { increaseCartItem, ShopCartItem } from '../shopcart/shopCartSlice'
-import { Product, selectProductsStatus } from './productSlice'
+import { increaseCartItem, ShopCartItem } from '../shopcart/shopcartslice'
+import { Product, selectProductsStatus } from './productslice'
 import { useSelector } from 'react-redux'
-import { increaseAmount } from '../checkout/checkoutSlice'
+import { increaseAmount } from '../checkout/checkoutslice'
 import { formatPrice } from '../../utils'
 
 interface ProductsProps {

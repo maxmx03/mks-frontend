@@ -1,4 +1,4 @@
-import Icon from './Icon'
+import Icon from './icon'
 import Brand from './brand'
 
 export { Icon, Brand }

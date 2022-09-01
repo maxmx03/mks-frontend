@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../../app/store'
 import { formatPrice } from '../../utils'
-import { ShopCartItem } from '../shopcart/shopCartSlice'
+import { ShopCartItem } from '../shopcart/shopcartslice'
 
 interface CheckoutState {
   isOpen: boolean

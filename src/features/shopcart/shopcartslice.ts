@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../../app/store'
-import { Product } from '../product/productSlice'
+import { Product } from '../product/productslice'
 
 export interface ShopCartItem {
   id: number

@@ -24,7 +24,7 @@ import {
   selectCartItems,
   removeCartItem,
   ShopCartItem,
-} from '../shopcart/shopCartSlice'
+} from '../shopcart/shopcartslice'
 import {
   increaseAmount,
   onToggle,
@@ -32,7 +32,7 @@ import {
   selectIsOpen,
   selectAmount,
   removeItemsAmount,
-} from './checkoutSlice'
+} from './checkoutslice'
 
 const Checkout = () => {
   const shopCartItems = useSelector(selectCartItems)

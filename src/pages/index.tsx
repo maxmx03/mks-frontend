@@ -5,7 +5,7 @@ import { useAppDispatch } from '../app/store'
 import { Footer, Layout, TopBar } from '../components'
 import Checkout from '../features/checkout'
 import Products from '../features/product'
-import { fetchProduct } from '../features/product/productSlice'
+import { fetchProduct } from '../features/product/productslice'
 
 const Home: NextPage = () => {
   const dispatch = useAppDispatch()
