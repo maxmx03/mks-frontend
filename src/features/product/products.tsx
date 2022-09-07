@@ -6,7 +6,6 @@ import {
   Text,
   Box,
   Button,
-  Skeleton,
 } from '@chakra-ui/react'
 import { Fragment, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -16,6 +15,7 @@ import { Product, selectProductsStatus } from './productslice'
 import { useSelector } from 'react-redux'
 import { increaseAmount } from '../checkout/checkoutslice'
 import { formatPrice } from '../../utils'
+import { ProductsSkeleton } from '../../components'
 
 interface ProductsProps {
   products: Product[]
@@ -43,6 +43,10 @@ const Products = ({ products }: ProductsProps) => {
     }
   }, [status, setLoading])
 
+  if (loading) {
+    return <ProductsSkeleton isLoaded={loading} quantity={products.length} />
+  }
+
   return (
     <Fragment>
       {products.length > 0 &&
@@ -56,17 +60,10 @@ const Products = ({ products }: ProductsProps) => {
               boxShadow="md"
               rounded="md"
             >
-              <GridItem
-                as={Skeleton}
-                isLoaded={!loading}
-                justifySelf="center"
-                alignSelf="center"
-              >
+              <GridItem justifySelf="center" alignSelf="center">
                 <Image src={product.photo} alt={product.name} boxSize="134" />
               </GridItem>
               <GridItem
-                as={Skeleton}
-                isLoaded={!loading}
                 display="flex"
                 justifyContent="space-between"
                 gap="5"
@@ -84,7 +81,7 @@ const Products = ({ products }: ProductsProps) => {
                   R$ {formatPrice(product.price)}
                 </Button>
               </GridItem>
-              <GridItem as={Skeleton} isLoaded={!loading} mx="3">
+              <GridItem mx="3">
                 <Text color="black" fontSize="0.625rem">
                   {product.description}
                 </Text>
